@@ -1,0 +1,65 @@
+#!/usr/bin/env php
+<?php
+
+require_once 'vendor/autoload.php';
+
+$qa_cmd = new Commando\Command();
+
+$qa_cmd->option()
+    ->require(true)
+    ->describedAs('Ablsolute or relative path to a directory containing Islandora import packages. ' .
+        'Trailing slash is optional.')
+    ->must(function($dir_path) {
+        if (file_exists($dir_path)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    });
+
+$qa_cmd->option('m')
+    ->aka('content_model')
+    ->require(true)
+    ->describedAs('An alias for groups of Islandora content models. Allowed values are ' .
+        'single, newspapers, books, compound. Default is "single".')
+    ->must(function($cmodel) {
+        $cmodels = array('single', 'newspapers', 'books', 'compound');
+        return in_array($cmodel, $cmodels);
+    });
+
+$qa_cmd->option('s')
+    ->aka('strict')
+    ->describedAs('If present, iipqa will exit with a code of 1 if it encounters any errors.')
+    ->boolean();
+
+$qa_cmd->option('l')
+    ->aka('log')
+    ->describedAs('Path to the log. Default is ./iipqa.log')
+    ->default('./iipqa.log');
+
+$content_model = $qa_cmd['content_model'];
+
+switch ($content_model) {
+    case 'single':
+        $qa_framework = new \iipqa\contentmodels\Single($qa_cmd[0], $qa_cmd['strict'], $qa_cmd['log']);
+        break;
+    case 'newspapers':
+        $qa_framework = new \iipqa\contentmodels\Newspapers($qa_cmd[0], $qa_cmd['strict'], $qa_cmd['log']);
+        break;
+    case 'books':
+        $qa_framework = new \iipqa\contentmodels\Books($qa_cmd[0], $qa_cmd['strict'], $qa_cmd['log']);
+        break;
+    case 'compound':
+        $qa_framework = new \iipqa\contentmodels\Compound($qa_cmd[0], $qa_cmd['strict'], $qa_cmd['log']);
+        break;
+    default:
+        exit("Sorry, the content model " . $qa_cmd['content_model'] . " is not recognized ." . PHP_EOL );
+}
+
+if (in_array(false, $qa_framework->applyQaTests())) {
+    print PHP_EOL . "Some tests failed. Details are available in " . $qa_cmd['log'] . PHP_EOL;
+}
+else {
+    print PHP_EOL . "All tests successful." . PHP_EOL;
+}
