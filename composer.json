@@ -2,7 +2,7 @@
     "name": "iipqa",
     "license": "GPL-3.0",
     "type": "project",
-    "description": "Command-line framework for applying Quality Assurance tests to sets of Islandora import packages.",
+    "description": "Command-line tool for applying Quality Assurance tests to sets of Islandora import packages.",
     "autoload": {
         "classmap": ["src/"]
     },
@@ -12,6 +12,7 @@
     "require": {
         "php": ">=5.5.0",
         "nategood/commando": "*",
+        "kevinlebrun/colors.php": "0.*",
         "monolog/monolog": "~1.13",
         "squizlabs/php_codesniffer":"~2.3"
     }

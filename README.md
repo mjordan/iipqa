@@ -40,25 +40,16 @@ arg 0
 When you run the tests, like this:
 
 ```
-./iqa  -m single -l /tmp/test.log /tmp
+./iipqa -m single -l ./test.txt /tmp/test
 ```
 
 you will see output like this:
 
 ```
-Input directory: /tmp	Content model: single	Config file: configs/single.yml	Log file: /tmp/test.log
-Running test FileExists		########## Done.
-Running test DeleteFile		########## Did not match any paths.
-Running test ValidateXMLFile	########## Done.
-All tests done.
+Running test Unique file extensions	########
+Some tests failed. Details are available in ./mjlog.txt
 ```
 
-Additional examples:
-
-```
-./iqa  -m newspapers -D /data/newspaperbatch1
-./iqa  -m newspapers -l /tmp/log.txt -c /data/newspapers-yml /data/newspaperbatch1
-```
 
 ## License
 

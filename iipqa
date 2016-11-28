@@ -4,6 +4,7 @@
 require_once 'vendor/autoload.php';
 
 $qa_cmd = new Commando\Command();
+$color = new Colors\Color();
 
 $qa_cmd->option()
     ->require(true)
@@ -58,8 +59,9 @@ switch ($content_model) {
 }
 
 if (in_array(false, $qa_framework->applyQaTests())) {
-    print PHP_EOL . "Some tests failed. Details are available in " . $qa_cmd['log'] . PHP_EOL;
+    print $color("Some tests failed. Details are available in ")->yellow() . $qa_cmd['log'] . PHP_EOL;
 }
 else {
-    print PHP_EOL . "All tests successful." . PHP_EOL;
+    // print PHP_EOL . "All tests successful." . PHP_EOL;
+    print $color("All tests successful." . PHP_EOL)->green();
 }

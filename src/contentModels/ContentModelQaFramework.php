@@ -14,9 +14,11 @@ abstract class ContentModelQaFramework
      */
     public function __construct($path_to_input_directory, $strict, $path_to_log)
     {
+        // Flag that is set within tests if a path is matched.
+        $this->matches = false;
+
         $this->inputDirectory = $path_to_input_directory;
         $this->strict = $strict;
-        $this->testPasses = true;
         $this->testResults = array();
 
         // Set up the logger.
@@ -37,7 +39,7 @@ abstract class ContentModelQaFramework
     abstract public function applyQaTests();
 
     /**
-     * Print out a progress bar for the set of QA tests.
+     * Print out a progress bar for a QA test.
      *
      * @param string $test_name
      *    The name of the current test.
@@ -58,6 +60,7 @@ abstract class ContentModelQaFramework
         if (!$num_paths) {
             return;
         }
+
         if ($current_path_num == 1) {
             print "Running test $test_name" . str_repeat("\t", $num_tabs);
         }
