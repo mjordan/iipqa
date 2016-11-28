@@ -13,13 +13,15 @@ class Single extends ContentModelQaFramework
      * @param string $path_to_log
      *    The path to the log file, from qa.
      */
-    public function __construct($path_to_input_directory, $strict, $path_to_log)
+    public function __construct($path_to_input_directory, $path_to_log)
     {
-        parent::__construct($path_to_input_directory, $strict, $path_to_log);
+        parent::__construct($path_to_input_directory, $path_to_log);
     	$this->contentModelAlias = 'single';
 
+        // Since all of our tests use the same list of paths, we can generate the
+        // list in the constructor to avoid generating it within each test.
         $reader = new \islandoraqa\utils\Reader();
-        $this->pathsToTest = $reader->readRecursive($this->inputDirectory);
+        $this->pathsToTest = $reader->read($this->inputDirectory);
         $this->numPathsToTest = count($this->pathsToTest);
     }
 
@@ -47,9 +49,11 @@ class Single extends ContentModelQaFramework
          $extensions = array();
          $current_path_num = 0;
          foreach ($this->pathsToTest as $path) {
+             // The next two lines should always be placed directly after the foreach()
+             // loop through the paths.
              $current_path_num++;
+             $this->matches = true;
              if (is_file($path)) {
-                 $this->matches = true;
                  $this->progressBar('Unique file extensions', $this->numPathsToTest, $current_path_num);
                  $pathinfo = pathinfo($path);
                  $extensions[] = strtolower($pathinfo['extension']);
@@ -58,12 +62,7 @@ class Single extends ContentModelQaFramework
          $unique_extensions = array_unique($extensions);
          if (count($unique_extensions) !== 2) {
              $this->log->addWarning("Unique extensions " . var_export($unique_extensions, true));
-             if ($this->strict){
-                 exit(1);
-             }
-             else {
-                 return false;
-             }
+             return false;
          }
          return true;
      }
@@ -79,17 +78,16 @@ class Single extends ContentModelQaFramework
          $directories_present = array();
          $current_path_num = 0;
          foreach ($this->pathsToTest as $path) {
+            // The next two lines should always be placed directly after the foreach()
+            // loop through the paths.
             $current_path_num++;
+            $this->matches = true;
             // To skip .. and .
             if (!preg_match('#\.{1,2}$#', $path)) {
                 $this->progressBar('Directories present', $this->numPathsToTest, $current_path_num);
                  if (is_dir($path)) {
-                     $this->matches = true;
                      $this->log->addWarning("Directory present " . $path);
                      $directories_present[] = $path;
-                     if ($this->strict){
-                         exit(1);
-                     }
                  }
              }
          }

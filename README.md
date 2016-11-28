@@ -14,7 +14,7 @@ To install Islandora QA Framework:
 
 ## Usage
 
-`php iqa [options] directory`
+`php iipqa [options] directory`
 
 'directory' (required) is the path to the directory containing Islandora import packages you wan to test. The trailing slash is optional.
 
@@ -44,12 +44,21 @@ When you run the tests, like this:
 ```
 
 you will see output like this:
+```
+Starting QA tests...
+Running test 'Unique file extensions'	########## Done.
+Running test 'Directories present'	########## Done.
+All tests successful.
+```
+
+or this:
 
 ```
-Running test Unique file extensions	########
-Some tests failed. Details are available in ./mjlog.txt
+Starting QA tests...
+Running test 'Unique file extensions'	########## Done.
+Running test 'Directories present'	########## Done.
+Some tests failed. Details are available in test.txt
 ```
-
 
 ## License
 

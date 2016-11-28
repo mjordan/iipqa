@@ -43,16 +43,16 @@ $content_model = $qa_cmd['content_model'];
 
 switch ($content_model) {
     case 'single':
-        $qa_framework = new \iipqa\contentmodels\Single($qa_cmd[0], $qa_cmd['strict'], $qa_cmd['log']);
+        $qa_framework = new \iipqa\contentmodels\Single($qa_cmd[0], $qa_cmd['log']);
         break;
     case 'newspapers':
-        $qa_framework = new \iipqa\contentmodels\Newspapers($qa_cmd[0], $qa_cmd['strict'], $qa_cmd['log']);
+        $qa_framework = new \iipqa\contentmodels\Newspapers($qa_cmd[0], $qa_cmd['log']);
         break;
     case 'books':
-        $qa_framework = new \iipqa\contentmodels\Books($qa_cmd[0], $qa_cmd['strict'], $qa_cmd['log']);
+        $qa_framework = new \iipqa\contentmodels\Books($qa_cmd[0], $qa_cmd['log']);
         break;
     case 'compound':
-        $qa_framework = new \iipqa\contentmodels\Compound($qa_cmd[0], $qa_cmd['strict'], $qa_cmd['log']);
+        $qa_framework = new \iipqa\contentmodels\Compound($qa_cmd[0], $qa_cmd['log']);
         break;
     default:
         exit("Sorry, the content model " . $qa_cmd['content_model'] . " is not recognized ." . PHP_EOL );
@@ -60,6 +60,9 @@ switch ($content_model) {
 
 if (in_array(false, $qa_framework->applyQaTests())) {
     print $color("Some tests failed. Details are available in ")->yellow() . $qa_cmd['log'] . PHP_EOL;
+    if ($qa_cmd['strict']){
+        exit(1);
+    }
 }
 else {
     // print PHP_EOL . "All tests successful." . PHP_EOL;

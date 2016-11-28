@@ -12,13 +12,12 @@ abstract class ContentModelQaFramework
     /**
      *
      */
-    public function __construct($path_to_input_directory, $strict, $path_to_log)
+    public function __construct($path_to_input_directory, $path_to_log)
     {
         // Flag that is set within tests if a path is matched.
         $this->matches = false;
 
         $this->inputDirectory = $path_to_input_directory;
-        $this->strict = $strict;
         $this->testResults = array();
 
         // Set up the logger.
@@ -26,6 +25,8 @@ abstract class ContentModelQaFramework
         $this->log = new \Monolog\Logger('iipqa');
         $this->logStreamHandler= new \Monolog\Handler\StreamHandler($this->pathToLog, Logger::INFO);
         $this->log->pushHandler($this->logStreamHandler);
+
+        print "Starting QA tests...\n";
     }
 
     /**
@@ -51,10 +52,10 @@ abstract class ContentModelQaFramework
      public function progressBar($test_name, $num_paths, $current_path_num)
      {
         if (strlen($test_name) <= 10) {
-            $num_tabs = 2;
+            $num_tabs = 1;
         }
         else {
-            $num_tabs = 1;
+            $num_tabs = 2;
         }
 
         if (!$num_paths) {
@@ -62,7 +63,7 @@ abstract class ContentModelQaFramework
         }
 
         if ($current_path_num == 1) {
-            print "Running test $test_name" . str_repeat("\t", $num_tabs);
+            print "Running test '$test_name'" . str_repeat("\t", $num_tabs);
         }
         // @todo: Determine chunk size so that each # represents
         // 10% of the paths.
