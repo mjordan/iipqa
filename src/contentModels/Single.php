@@ -47,22 +47,30 @@ class Single extends ContentModelQaFramework
      */
     public function checkExtensions()
     {
+        $all_files = glob($this->inputDirectory . DIRECTORY_SEPARATOR . '*');
+        $only_dirs = array();
+        foreach ($all_files as $file) {
+            if (is_file($file)) {
+                $only_files[] = $file;
+            }
+        }
+        
+        $num_files = count($only_files);
+
         $extensions = array();
         $current_path_num = 0;
-        foreach ($this->pathsToTest as $path) {
+        foreach ($only_files as $path) {
             // The next two lines should always be placed directly after the foreach()
-            // loop through the paths.
-            $current_path_num++;
+            // loop through the paths being checked.
             $this->matches = true;
-            if (is_file($path)) {
-                $this->progressBar('Unique file extensions', $this->numPathsToTest, $current_path_num);
-                $pathinfo = pathinfo($path);
-                // To account for files with no extension.
-                if (isset($pathinfo['extension'])) {
-                    $extensions[] = strtolower($pathinfo['extension']);
-                } else {
-                    $extensions[] = '';
-                }
+            $current_path_num++;
+            $this->progressBar('Unique file extensions', $num_files, $current_path_num);
+            $pathinfo = pathinfo($path);
+            // To account for files with no extension.
+            if (isset($pathinfo['extension'])) {
+                $extensions[] = strtolower($pathinfo['extension']);
+            } else {
+                $extensions[] = '';
             }
         }
         $unique_extensions = array_unique($extensions);
@@ -142,7 +150,7 @@ class Single extends ContentModelQaFramework
             if (!preg_match('#\.{1,2}$#', $path)) {
                 $this->progressBar('Directories present', $this->numPathsToTest, $current_path_num);
                 if (is_dir($path)) {
-                    $this->log->addWarning("Directory present " . $path);
+                    $this->log->addWarning("Directory present: " . $path);
                     $directories_present[] = $path;
                 }
             }

@@ -76,5 +76,5 @@ GPLv3
 ## Development
 
 * Check code style with `./vendor/bin/phpcs --standard=PSR2 src`
-* Write PHPUnit tests, then run them within /tests by running `phpunit`
+* Write PHPUnit tests, then run them within the iipqa directory by running `phpunit tests`
 * If you discover an issue, or have a use case not documented here, open an issue.
