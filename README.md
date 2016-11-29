@@ -1,6 +1,6 @@
 # Islandora Import Package QA Tool
 
-A tool for applying Quality Assurance tests to Islandora import packages before importing them.
+A tool for applying Quality Assurance tests to Islandora import packages in preparation for importing them.
 
 ## System requirements and installation
 
