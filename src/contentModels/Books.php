@@ -5,7 +5,7 @@ namespace iipqa\contentmodels;
 /**
  *
  */
-class Newspapers extends ContentModelQaFramework
+class Books extends ContentModelQaFramework
 {
     /**
      * @param string $path_to_input_directory
@@ -25,7 +25,7 @@ class Newspapers extends ContentModelQaFramework
      */
     public function applyQaTests()
     {
-        print "This QA test class is not yet available\n";
+        print "Sorry, the " . $this->contentModelAlias . " QA test class is not available yet.\n";
         return array('false');
     }
 }
