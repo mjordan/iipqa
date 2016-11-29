@@ -28,5 +28,4 @@ class Newspapers extends ContentModelQaFramework
         print "This QA test class is not yet available\n";
         return array('false');
     }
-
 }

@@ -3,10 +3,7 @@
 namespace iipqa\contentmodels;
 
 /**
- * Checks for the existense of subfolders in $options['dir'] (that correspond to compound
- * objects) that contain one subfolder per child object. Each compound folder must contain
- * a file named 'structure.xml' and a file named 'MODS.xml'. Each child folder must contain
- * a named 'MODS.xml' and a file with the name 'OBJ', with any extension.
+ * Checks for input for the Islandora Compound Batch module.
  */
 class Compound extends ContentModelQaFramework
 {
@@ -32,6 +29,7 @@ class Compound extends ContentModelQaFramework
     {
         $this->testResults[] = $this->checkForNonDirectories();
         $this->testResults[] = $this->checkRequiredCompoundFiles();
+        $this->testResults[] = $this->checkStructure();
         $this->testResults[] = $this->checkRequiredChildFiles();
         return $this->testResults;
     }
@@ -120,6 +118,72 @@ class Compound extends ContentModelQaFramework
                 $mods_path = $path . DIRECTORY_SEPARATOR . 'MODS.xml';
                 if (!file_exists($mods_path)) {
                     $this->log->addWarning("Check required compound object files - MODS.xml missing in " . $path);
+                    $bad_compound_paths[] = $path;
+                }
+            }
+        }
+
+        // If there are no reported bad paths, we're good to go.
+        if (count($bad_compound_paths)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * Checks to make sure that the directories named in structure.xml
+     * match the directories within the compound directory.
+     *
+     * @return bool
+     *    True if the test passes, false if it doesn't.
+     */
+    public function checkStructure()
+    {
+         // We already have $this->compoundPathsToTest and $this->numCompoundPathstoTest
+         // so there's no need to regenerate them.
+
+        $bad_compound_paths = array();
+        $current_path_num = 0;
+        foreach ($this->compoundPathsToTest as $path) {
+            $current_path_num++;
+            $this->matches = true;
+            // To skip .. and .
+            if (!preg_match('#\.{1,2}$#', $path)) {
+                $this->progressBar(
+                    'Check for directories named in structure.xml',
+                    $this->numCompoundPathsToTest,
+                    $current_path_num
+                );
+
+                $subdirs_in_compound_dir = $this->reader->read($path, true);
+
+                $structure_path = $path . DIRECTORY_SEPARATOR . 'structure.xml';
+                if (file_exists($structure_path)) {
+                    $structure_file_contents = file_get_contents($structure_path);
+                    $xml = simplexml_load_file($structure_path);
+                    $num_subdirectories = count($subdirs_in_compound_dir);
+                    $num_children_in_structure_file = count($xml->child);
+                    if ($num_subdirectories != $num_children_in_structure_file) {
+                        $message = "Check stucture - number of child directories in directory " .
+                            "($num_subdirectories) does not match number in structure.xml " .
+                            "($num_children_in_structure_file) in $path";
+                        $this->log->addWarning($message);
+                        $bad_compound_paths[] = $path;
+                    }
+                    foreach ($xml->child as $child) {
+                        $dir_to_check = rtrim($this->inputDirectory, DIRECTORY_SEPARATOR) .
+                            DIRECTORY_SEPARATOR . $child['content'];
+                        if (!file_exists($dir_to_check)) {
+                            $message = "Check stucture - directory named in structure.xml " .
+                                "($dir_to_check) is not present in compound object directory " .
+                                "in $path";
+                            $this->log->addWarning($message);
+                            $bad_compound_paths[] = $path;
+                        }
+                    }
+                } else {
+                    $this->log->addWarning("Check stucture - structure.xml missing in " . $path);
                     $bad_compound_paths[] = $path;
                 }
             }
