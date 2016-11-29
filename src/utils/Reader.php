@@ -3,8 +3,7 @@
 namespace islandoraqa\utils;
 
 /**
- * The Reader is instantiated in the instances of
- * ContentModelQaFramework.
+ * The Reader is instantiated in the instances of ContentModelQaFramework.
  */
 class Reader
 {
@@ -17,8 +16,7 @@ class Reader
         $pattern = $path . DIRECTORY_SEPARATOR . "*";
         if ($dirs_only) {
             $file_list = glob($pattern, GLOB_ONLYDIR);
-        }
-        else {
+        } else {
             $file_list = glob($pattern);
         }
 

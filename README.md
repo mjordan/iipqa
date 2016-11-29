@@ -14,16 +14,15 @@ To install Islandora QA Framework:
 
 ## Usage
 
+iipqa should be run against you Islandora import packages prior to loading the packages with Islandora Batch, Islandora Book Batch, Islandora Newspaper Batch, or Islandora Compound Batch. Run it as follows:
+
 `php iipqa [options] directory`
 
-'directory' (required) is the path to the directory containing Islandora import packages you wan to test. The trailing slash is optional.
+'directory' (required) is the path to the directory containing Islandora import packages you want to test. The trailing slash is optional.
 
 Options:
 
 ```
-arg 0
-     Required. A directory containing Islandora import packages. Trailing slash is optional.
-
 -m/--content_model <argument>
      Required. An aliases for groups of Islandora content models. Allowed values are single, newspapers, books, compound.
 
@@ -31,13 +30,13 @@ arg 0
      Path to the log. Default is ./iipqa.log
 
 -s/--strict
-     If present, iipqa will exit with a code of 1 if it encounters any errors. Useful while running iipqa within other scripts.
+     If present, iipqa will exit with a code of 1 if it encounters any errors. Useful while running iipqa within shell scripts.
 
 --help
      Show the help page for this command.
 ```
 
-When you run the tests, like this:
+When you run the iipqa, like this:
 
 ```
 ./iipqa -m single -l ./test.txt /tmp/test
@@ -60,12 +59,20 @@ Running test 'Directories present'	########## Done.
 Some tests failed. Details are available in test.txt
 ```
 
+If any of iipqa's tests failed, details of what it found will be available in your log file.
+
 ## License
 
 GPLv3
 
+## To do
+
+* Add PHPUnit tests for iipqa.
+* Add QA tests for book and newspaper import packages.
+* Add developer documentation, so people can add their own tests and content models.
+
 ## Development
 
-* Check code style with `./vendor/bin/phpcs src`
+* Check code style with `./vendor/bin/phpcs --standard=PSR2 src`
 * Write PHPUnit tests, then run them within /tests by running `phpunit`
 * If you discover an issue, or have a use case not documented here, open an issue.

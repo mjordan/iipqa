@@ -49,12 +49,11 @@ abstract class ContentModelQaFramework
      * @param int $current_path_num
      *    The position of the path being tested within the array of all paths.
      */
-     public function progressBar($test_name, $num_paths, $current_path_num)
-     {
+    public function progressBar($test_name, $num_paths, $current_path_num)
+    {
         if (strlen($test_name) <= 10) {
             $num_tabs = 1;
-        }
-        else {
+        } else {
             $num_tabs = 2;
         }
 
@@ -74,10 +73,9 @@ abstract class ContentModelQaFramework
         if ($num_paths == $current_path_num) {
             if ($this->matches) {
                 print " Done." . PHP_EOL;
-            }
-            else {
+            } else {
                 print " Did not match any paths." . PHP_EOL;
             }
         }
-     }
+    }
 }
