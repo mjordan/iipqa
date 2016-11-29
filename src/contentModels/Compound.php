@@ -90,7 +90,7 @@ class Compound extends ContentModelQaFramework
             // To skip .. and .
             if (!preg_match('#\.{1,2}$#', $path)) {
                 $this->progressBar(
-                    'Check for required compouond object files',
+                    'Check for required compound object files',
                     $this->numCompoundPathsToTest,
                     $current_path_num
                 );
@@ -249,7 +249,7 @@ class Compound extends ContentModelQaFramework
                     // and OBJ.something, will have been accounted for already.
                     if (count($files_in_child_dir) > 2) {
                         $this->log->addWarning("Check required child object files - Unwanted file in " .
-                            $path . ": " . var_export($files_in_child_dir, true));
+                            $path . ". All files in that directory: " . var_export($files_in_child_dir, true));
                         $bad_child_paths[] = $file_in_child_dir;
                     }
                 }
