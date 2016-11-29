@@ -61,7 +61,7 @@ Running test 'Directories present'	########## Done.
 Some tests failed. Details are available in test.txt
 ```
 
-If any of iipqa's tests failed, details of what it found will be available in your log file.
+If any of iipqa's checks failed, details of the failure will be available in your log file.
 
 ## License
 
@@ -69,12 +69,12 @@ GPLv3
 
 ## To do
 
-* Add PHPUnit tests for iipqa.
 * Add QA tests for book and newspaper import packages.
+* Add PHPUnit tests for compound class.
 * Add developer documentation, so people can add their own tests and content models.
 
 ## Development
 
 * Check code style with `./vendor/bin/phpcs --standard=PSR2 src`
 * Write PHPUnit tests, then run them within the iipqa directory by running `phpunit tests`
-* If you discover an issue, or have a use case not documented here, open an issue.
+* If you discover a bug, or have a use case not documented here, open an issue.
