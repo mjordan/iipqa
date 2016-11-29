@@ -32,6 +32,7 @@ class Single extends ContentModelQaFramework
     public function applyQaTests()
     {
         $this->testResults[] = $this->checkExtensions();
+        $this->testResults[] = $this->checkFilePairs();
         $this->testResults[] = $this->checkForDirectories();
         return $this->testResults;
     }
@@ -56,15 +57,70 @@ class Single extends ContentModelQaFramework
             if (is_file($path)) {
                 $this->progressBar('Unique file extensions', $this->numPathsToTest, $current_path_num);
                 $pathinfo = pathinfo($path);
-                $extensions[] = strtolower($pathinfo['extension']);
+                // To account for files with no extension.
+                if (isset($pathinfo['extension'])) {
+                    $extensions[] = strtolower($pathinfo['extension']);
+                } else {
+                    $extensions[] = '';
+                }
             }
         }
         $unique_extensions = array_unique($extensions);
         if (count($unique_extensions) !== 2) {
             $this->log->addWarning("Unique extensions " . var_export($unique_extensions, true));
             return false;
+        } else {
+            return true;
         }
-        return true;
+    }
+
+    /**
+     * Checks to make sure that each .xml file has a corresponding OBJ file
+     * and vice versa.
+     *
+     * @return bool
+     *    True if the test passes, false if it doesn't.
+     */
+    public function checkFilePairs()
+    {
+        // Since this test doesn't iterate through $this->pathsToTest, we invoke the
+        // progress bar in its own little loop through that array, so this test produces
+        // output like the others.
+        $current_path_num = 0;
+        foreach ($this->pathsToTest as $path) {
+            $current_path_num++;
+            $this->matches = true;
+            $this->progressBar('XML/OBJ pairs', $this->numPathsToTest, $current_path_num);
+        }
+
+        $xml_files = glob($this->inputDirectory . DIRECTORY_SEPARATOR . '*.xml');
+        $xml_files_assoc = array();
+        foreach ($xml_files as $xml_file) {
+            $xml_pathinfo = pathinfo($xml_file);
+            $xml_filename = $xml_pathinfo['filename'];
+            $xml_files_assoc[$xml_filename] = $xml_pathinfo['basename'];
+        }
+        $obj_files = preg_grep('/\.xml$/', glob($this->inputDirectory . DIRECTORY_SEPARATOR . '*'), PREG_GREP_INVERT);
+        $obj_files_assoc = array();
+        foreach ($obj_files as $obj_file) {
+            $obj_pathinfo = pathinfo($obj_file);
+            $obj_filename = $obj_pathinfo['filename'];
+            $obj_files_assoc[$obj_filename] = $obj_pathinfo['basename'];
+        }
+        $xml_diff = array_diff(array_keys($xml_files_assoc), array_keys($obj_files_assoc));
+        $obj_diff = array_diff(array_keys($obj_files_assoc), array_keys($xml_files_assoc));
+
+        if (count($xml_diff) || count($obj_diff)) {
+            if (count($xml_diff)) {
+                $this->log->addWarning("Some XML files have no corresponding OBJ file " . var_export($xml_diff, true));
+            }
+            if (count($obj_diff)) {
+                $this->log->addWarning("Some OBJ files have no corresponding XML file " . var_export($obj_diff, true));
+            }
+            return false;
+        } else {
+            return true;
+        }
     }
 
     /**

@@ -42,19 +42,21 @@ When you run the iipqa, like this:
 ./iipqa -m single -l ./test.txt /tmp/test
 ```
 
-you will see output like this:
+you will see output like this if no QA tests fail:
 ```
 Starting QA tests...
 Running test 'Unique file extensions'	########## Done.
+Running test 'XML/OBJ pairs'		########## Done.
 Running test 'Directories present'	########## Done.
 All tests successful.
 ```
 
-or this:
+or like this, if any do:
 
 ```
 Starting QA tests...
 Running test 'Unique file extensions'	########## Done.
+Running test 'XML/OBJ pairs'		########## Done.
 Running test 'Directories present'	########## Done.
 Some tests failed. Details are available in test.txt
 ```
