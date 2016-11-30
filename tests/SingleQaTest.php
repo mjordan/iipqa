@@ -1,6 +1,6 @@
 <?php
 
-require_once 'vendor/autoload.php';
+require dirname(__DIR__) . '/vendor/autoload.php';
 
 class SingleQaTest extends \PHPUnit_Framework_TestCase
 {
