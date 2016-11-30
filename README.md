@@ -1,4 +1,4 @@
-# Islandora Import Package QA Tool
+# Islandora Import Package QA Tool [![Build Status](https://travis-ci.org/mjordan/iipqa.png?branch=master)](https://travis-ci.org/mjordan/iipqa)
 
 A tool for applying Quality Assurance tests to Islandora import packages in preparation for importing them.
 
