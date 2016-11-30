@@ -1,10 +1,10 @@
 # Islandora Import Package QA Tool [![Build Status](https://travis-ci.org/mjordan/iipqa.svg?branch=master)](https://travis-ci.org/mjordan/iipqa)
 
-A tool for applying Quality Assurance tests to Islandora import packages in preparation for importing them.
+A tool for applying Quality Assurance checks to Islandora import packages in preparation for importing them.
 
 ## System requirements and installation
 
-* PHP 5.5.0 or higher. Not tested on PHP 7.
+* PHP 5.5.0 or higher.
 * [Composer](https://getcomposer.org)
 
 To install Islandora QA Framework:
@@ -14,7 +14,7 @@ To install Islandora QA Framework:
 
 ## Usage
 
-iipqa should be run against you Islandora import packages prior to loading the packages with Islandora Batch, Islandora Book Batch, Islandora Newspaper Batch, or Islandora Compound Batch. Run it as follows:
+iipqa should be run against you Islandora import packages prior to loading the packages with Islandora Batch, Islandora Book Batch, Islandora Newspaper Batch, or Islandora Compound Batch. Run iipqa as follows:
 
 `php iipqa [options] directory`
 
@@ -30,7 +30,7 @@ Options:
      Path to the log. Default is ./iipqa.log
 
 -s/--strict
-     If present, iipqa will exit with a code of 1 if it encounters any errors. Useful while running iipqa within shell scripts.
+     If present, iipqa will exit with a code of 1 instead of 0 if it encounters any errors. Useful while running iipqa within shell scripts.
 
 --help
      Show the help page for this command.
@@ -69,12 +69,15 @@ GPLv3
 
 ## To do
 
-* Add QA tests for book and newspaper import packages.
+* Add QA checks for book and newspaper import packages.
 * Add PHPUnit tests for compound class.
+* Add ability to run optional QA tests, for example validating .xml files against a schema
 * Add developer documentation, so people can add their own tests and content models.
 
-## Development
+## Development/contributing
 
-* Check code style with `./vendor/bin/phpcs --standard=PSR2 src`
-* Write PHPUnit tests, then run them within the iipqa directory by running `phpunit tests`
 * If you discover a bug, or have a use case not documented here, open an issue.
+* If you want to open a pull request, please open an issue first.
+* Coding guidelines
+  * Check code style with `./vendor/bin/phpcs --standard=PSR2 src`
+  * Write PHPUnit tests, then run them within the iipqa directory by running `phpunit tests`
