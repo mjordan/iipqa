@@ -21,7 +21,7 @@ class SingleQaTest extends \PHPUnit_Framework_TestCase
     {
         $single = new \iipqa\contentmodels\Single($this->inputDirectoryFail, $this->pathToLog);
         $single->applyQaTests();
-        $this->assertContains("6 => 'png'", file_get_contents($this->pathToLog));
+        $this->assertContains("5 => 'png'", file_get_contents($this->pathToLog));
     }
 
     public function testCheckFilePairs()
@@ -41,6 +41,6 @@ class SingleQaTest extends \PHPUnit_Framework_TestCase
     
     protected function tearDown()
     {
-        @unlink($this->path_to_log);
+        @unlink($this->pathToLog);
     }
 }

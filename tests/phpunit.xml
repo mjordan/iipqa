@@ -1,0 +1,5 @@
+<testsuites>
+  <testsuite name="iipqa">
+    <directory>.</directory>
+  </testsuite>
+</testsuites>
