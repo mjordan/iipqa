@@ -1,6 +1,6 @@
 # Islandora Import Package QA Tool [![Build Status](https://travis-ci.org/mjordan/iipqa.svg?branch=master)](https://travis-ci.org/mjordan/iipqa)
 
-A tool for applying Quality Assurance checks to Islandora import packages in preparation for importing them.
+A tool for applying Quality Assurance checks against Islandora import packages in preparation for importing them.
 
 ## System requirements and installation
 
@@ -71,8 +71,8 @@ GPLv3
 
 * Add QA checks for book and newspaper import packages.
 * Add PHPUnit tests for compound class.
-* Add ability to run optional QA tests, for example validating .xml files against a schema
-* Add developer documentation, so people can add their own tests and content models.
+* Add ability to run optional QA checks, for example validating .xml files against a schema.
+* Add developer documentation, so people can add their own QA checks and content models.
 
 ## Development/contributing
 
