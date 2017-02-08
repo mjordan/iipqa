@@ -64,9 +64,16 @@ abstract class ContentModelQaFramework
         if ($current_path_num == 1) {
             print "Running test '$test_name'" . str_repeat("\t", $num_tabs);
         }
+
         // @todo: Determine chunk size so that each # represents
         // 10% of the paths.
-        $num_chunks = $num_paths / 10;
+        if ($num_paths < 10) {
+            $num_chunks = $num_paths;
+        }
+        else {
+            $num_chunks = $num_paths / 10;
+        }
+
         if ($current_path_num % $num_chunks == 0) {
             print "#";
         }
