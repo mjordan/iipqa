@@ -69,8 +69,7 @@ abstract class ContentModelQaFramework
         // 10% of the paths.
         if ($num_paths < 10) {
             $num_chunks = $num_paths;
-        }
-        else {
+        } else {
             $num_chunks = $num_paths / 10;
         }
 
