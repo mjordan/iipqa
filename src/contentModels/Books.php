@@ -50,7 +50,11 @@ class Books extends ContentModelQaFramework
             $this->matches = true;
             // Skip .. and .
             if (!preg_match('#\.{1,2}$#', $path)) {
-                $this->progressBar('Check input directory for disallowed files', $this->numBookPathsToTest, $current_path_num);
+                $this->progressBar(
+                    'Check input directory for disallowed files',
+                    $this->numBookPathsToTest,
+                    $current_path_num
+                );
                 if (!is_dir($path)) {
                     $this->log->addWarning("File " . $path . " is not allowed in the input directory.");
                     $files_present[] = $path;
@@ -111,12 +115,12 @@ class Books extends ContentModelQaFramework
                             if (!$this->checkPageDirectoryContents($page_dir)) {
                                 $failures[] = $page_dir;
                             }
-                        }
-                        else {
+                        } else {
                             // If a file and not a directory, check to see if it's in the
                             // list of allowed files.
                             $filename = basename($page_dir);
-                            if (!in_array($filename, $allowed_metadata_files) && !in_array($filename, $allowed_thumbnail_files)) {
+                            if (!in_array($filename, $allowed_metadata_files) &&
+                                !in_array($filename, $allowed_thumbnail_files)) {
                                 $this->log->addWarning("File $filename is not an allowed " .
                                     "filename within book directory $book_path.");
                                 $failures[] = $page_dir;
@@ -162,7 +166,17 @@ class Books extends ContentModelQaFramework
         }
 
         // Optional page datastream files.
-        $allowed_ds_files = array('MODS.xml', 'JP2.jp2', 'JPEG.jpg', 'TN.jpg', 'TN.png', 'DC.xml', 'OCR.asc', 'OCR.txt', 'HOCR.shtml');
+        $allowed_ds_files = array(
+            'MODS.xml',
+            'DC.xml',
+            'JP2.jp2',
+            'JPEG.jpg',
+            'TN.jpg',
+            'TN.png',
+            'OCR.asc',
+            'OCR.txt',
+            'HOCR.shtml'
+        );
         $page_files = $this->reader->read($dir);
         foreach ($page_files as $page_file) {
             if (!preg_match('#\.{1,2}$#', $page_file)) {
