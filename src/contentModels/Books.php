@@ -50,7 +50,7 @@ class Books extends ContentModelQaFramework
             $this->matches = true;
             // Skip .. and .
             if (!preg_match('#\.{1,2}$#', $path)) {
-                $this->progressBar('Check for nondirectories', $this->numBookPathsToTest, $current_path_num);
+                $this->progressBar('Check input directory for disallowed files', $this->numBookPathsToTest, $current_path_num);
                 if (!is_dir($path)) {
                     $this->log->addWarning("File " . $path . " is not allowed in the input directory.");
                     $files_present[] = $path;
@@ -67,15 +67,18 @@ class Books extends ContentModelQaFramework
     }
 
     /**
-     * Checks to make sure that there are only numeric subdirectories and one
-     * metadata file in each book directory.
+     * Checks to make sure that there are only numeric subdirectories and optionally
+     * a metadata file and a thumnbail file in each book directory.
+     *
+     * @todo: Check to make sure there is only one file of each type?
      *
      * @return bool
      *    True if the test passes, false if it doesn't.
      */
     public function checkBookFiles()
     {
-        $allowed_files = array('MODS.xml', 'DC.xml', '--METADATA--.xml');
+        $allowed_metadata_files = array('MODS.xml', 'DC.xml', '--METADATA--.xml');
+        $allowed_thumbnail_files = array('TN.jpg', 'TN.png');
         $failures = array();
         $one_file = false;
 
@@ -84,11 +87,12 @@ class Books extends ContentModelQaFramework
         $current_path_num = 0;
         foreach ($this->bookPathsToTest as $book_path) {
             $current_path_num++;
+            $this->matches = true;
             $files_in_book_dir = array();
             // To skip .. and .
             if (!preg_match('#\.{1,2}$#', $book_path)) {
                 $this->progressBar(
-                    'Check for book metadata files and page subdirectories',
+                    'Check for expected book metadata files, page subdirectories, and page files',
                     $this->numBookPathsToTest,
                     $current_path_num
                 );
@@ -107,24 +111,16 @@ class Books extends ContentModelQaFramework
                             if (!$this->checkPageDirectoryContents($page_dir)) {
                                 $failures[] = $page_dir;
                             }
-                        } else {
-                            // Can only be a maximum of one metadata file per book directory.
-                            if ($one_file) {
-                                $this->log->addWarning(
-                                    "Book directory $book_path contains more than one non-directory file."
-                                );
-                                $failures[] = $book_path;
-                            }
-
+                        }
+                        else {
                             // If a file and not a directory, check to see if it's in the
                             // list of allowed files.
                             $filename = basename($page_dir);
-                            if (!in_array($filename, $allowed_files)) {
+                            if (!in_array($filename, $allowed_metadata_files) && !in_array($filename, $allowed_thumbnail_files)) {
                                 $this->log->addWarning("File $filename is not an allowed " .
                                     "filename within book directory $book_path.");
                                 $failures[] = $page_dir;
                             }
-                            $one_file = true;
                         }
                     }
                 }
@@ -141,7 +137,7 @@ class Books extends ContentModelQaFramework
 
     /**
      * Checks to make sure that page directories contain an OBJ file and only
-     * files from an allowed list of datastream files.
+     * files from an allowed list.
      *
      * @param string $dir
      *    A path to a page-level directory.
@@ -152,7 +148,7 @@ class Books extends ContentModelQaFramework
     public function checkPageDirectoryContents($dir)
     {
         $failures = array();
-        $allowed_obj_files = array('OBJ.tif', 'OBJ.tiff', 'OBJ.jp2', 'OBJ.jpg', 'OBJ.jpeg');
+        $allowed_obj_files = array('OBJ.tif', 'OBJ.tiff', 'OBJ.jp2', 'OBJ.jpg', 'OBJ.jpeg', 'TECHMD.xml');
         $obj_files = glob("$dir/OBJ.*");
         if (count($obj_files) > 1) {
             $this->log->addWarning("Too many OBJ.* files in page directory $dir");
@@ -165,8 +161,8 @@ class Books extends ContentModelQaFramework
             }
         }
 
-        // Optional datastream files.
-        $allowed_ds_files = array('MODS.xml', 'DC.xml', 'OCR.asc', 'HOCR.shtml');
+        // Optional page datastream files.
+        $allowed_ds_files = array('MODS.xml', 'JP2.jp2', 'JPEG.jpg', 'TN.jpg', 'TN.png', 'DC.xml', 'OCR.asc', 'OCR.txt', 'HOCR.shtml');
         $page_files = $this->reader->read($dir);
         foreach ($page_files as $page_file) {
             if (!preg_match('#\.{1,2}$#', $page_file)) {
