@@ -69,8 +69,7 @@ GPLv3
 
 ## To do
 
-* Add QA checks for newspaper issue import packages.
-* Add PHPUnit tests for compound and book classes.
+* Add PHPUnit tests for compound, book, and newspaper issue classes.
 * Add ability to run optional QA checks, for example validating .xml files against a schema.
 * Add developer documentation, so people can add their own QA checks and content models.
 

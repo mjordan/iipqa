@@ -12,10 +12,12 @@ class Compound extends ContentModelQaFramework
      *    The path to the input directory, from qa.
      * @param string $path_to_log
      *    The path to the log file, from qa.
+     * @param object $command
+     *    The command used to invoke iipqa.
      */
-    public function __construct($path_to_input_directory, $path_to_log)
+    public function __construct($path_to_input_directory, $path_to_log, $command)
     {
-        parent::__construct($path_to_input_directory, $path_to_log);
+        parent::__construct($path_to_input_directory, $path_to_log, $command);
         $this->contentModelAlias = 'single';
 
         $this->reader = new \islandoraqa\utils\Reader();

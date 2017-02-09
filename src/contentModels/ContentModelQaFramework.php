@@ -12,7 +12,7 @@ abstract class ContentModelQaFramework
     /**
      *
      */
-    public function __construct($path_to_input_directory, $path_to_log)
+    public function __construct($path_to_input_directory, $path_to_log, $command)
     {
         // Flag that is set within tests if a path is matched.
         $this->matches = false;
@@ -27,6 +27,12 @@ abstract class ContentModelQaFramework
         $this->log->pushHandler($this->logStreamHandler);
 
         print "Starting QA tests...\n";
+
+        $start_time = date("F j, Y, g:i a");
+        $this->log->addInfo("Configuration", array('Start time' => $start_time));
+        $this->log->addInfo("Configuration", array('Strict' => $command['strict']));
+        $this->log->addInfo("Configuration", array('Log file' => $command['log']));
+        $this->log->addInfo("Configuration", array('Input directory' => $command[0]));
     }
 
     /**
