@@ -15,5 +15,11 @@
         "kevinlebrun/colors.php": "0.*",
         "monolog/monolog": "~1.13",
         "squizlabs/php_codesniffer":"~2.3"
+    },
+    "scripts": {
+        "post-update-cmd": [
+            "wget -O src/utils/xlink.xsd http://www.loc.gov/standards/xlink/xlink.xsd",
+            "wget -O src/utils/xml.xsd http://www.loc.gov/mods/xml.xsd"
+        ]
     }
 }

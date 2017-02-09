@@ -1,6 +1,6 @@
 <?php
 
-namespace islandoraqa\utils;
+namespace iipqa\utils;
 
 /**
  * The Reader is instantiated in the instances of ContentModelQaFramework.

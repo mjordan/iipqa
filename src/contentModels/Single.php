@@ -22,9 +22,11 @@ class Single extends ContentModelQaFramework
 
         // Since all of our tests use the same list of paths, we can generate the
         // list in the constructor to avoid generating it within each test.
-        $reader = new \islandoraqa\utils\Reader();
+        $reader = new \iipqa\utils\Reader();
         $this->pathsToTest = $reader->read($this->inputDirectory);
         $this->numPathsToTest = count($this->pathsToTest);
+
+        $this->progressBar = new \iipqa\utils\ProgressBar();
     }
 
     /**
@@ -64,9 +66,9 @@ class Single extends ContentModelQaFramework
         foreach ($only_files as $path) {
             // The next two lines should always be placed directly after the foreach()
             // loop through the paths being checked.
-            $this->matches = true;
+            $this->progressBar->matches = true;
             $current_path_num++;
-            $this->progressBar('Unique file extensions', $num_files, $current_path_num);
+            $this->progressBar->progressBar('Unique file extensions', $num_files, $current_path_num);
             $pathinfo = pathinfo($path);
             // To account for files with no extension.
             if (isset($pathinfo['extension'])) {
@@ -100,7 +102,7 @@ class Single extends ContentModelQaFramework
         foreach ($this->pathsToTest as $path) {
             $current_path_num++;
             $this->matches = true;
-            $this->progressBar('XML/OBJ pairs', $this->numPathsToTest, $current_path_num);
+            $this->progressBar->progressBar('XML/OBJ pairs', $this->numPathsToTest, $current_path_num);
         }
 
         $xml_files = glob($this->inputDirectory . DIRECTORY_SEPARATOR . '*.xml');
@@ -150,7 +152,7 @@ class Single extends ContentModelQaFramework
             $this->matches = true;
             // To skip .. and .
             if (!preg_match('#\.{1,2}$#', $path)) {
-                $this->progressBar('Directories present', $this->numPathsToTest, $current_path_num);
+                $this->progressBar->progressBar('Directories present', $this->numPathsToTest, $current_path_num);
                 if (is_dir($path)) {
                     $this->log->addWarning("Directory present: " . $path);
                     $directories_present[] = $path;

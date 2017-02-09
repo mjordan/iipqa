@@ -20,7 +20,8 @@ class Compound extends ContentModelQaFramework
         parent::__construct($path_to_input_directory, $path_to_log, $command);
         $this->contentModelAlias = 'single';
 
-        $this->reader = new \islandoraqa\utils\Reader();
+        $this->reader = new \iipqa\utils\Reader();
+        $this->progressBar = new \iipqa\utils\ProgressBar();
     }
 
     /**
@@ -56,7 +57,11 @@ class Compound extends ContentModelQaFramework
             $this->matches = true;
             // To skip .. and .
             if (!preg_match('#\.{1,2}$#', $path)) {
-                $this->progressBar('Check for nondirectories', $this->numCompoundPathsToTest, $current_path_num);
+                $this->progressBar->progressBar(
+                    'Check for nondirectories',
+                    $this->numCompoundPathsToTest,
+                    $current_path_num
+                );
                 if (!is_dir($path)) {
                     $this->log->addWarning("File present " . $path);
                     $files_present[] = $path;
@@ -91,7 +96,7 @@ class Compound extends ContentModelQaFramework
             $this->matches = true;
             // To skip .. and .
             if (!preg_match('#\.{1,2}$#', $path)) {
-                $this->progressBar(
+                $this->progressBar->progressBar(
                     'Check for required compound object files',
                     $this->numCompoundPathsToTest,
                     $current_path_num
@@ -152,7 +157,7 @@ class Compound extends ContentModelQaFramework
             $this->matches = true;
             // To skip .. and .
             if (!preg_match('#\.{1,2}$#', $path)) {
-                $this->progressBar(
+                $this->progressBar->progressBar(
                     'Check for directories named in structure.xml',
                     $this->numCompoundPathsToTest,
                     $current_path_num
@@ -218,7 +223,7 @@ class Compound extends ContentModelQaFramework
             $this->matches = true;
             // To skip .. and .
             if (!preg_match('#\.{1,2}$#', $path)) {
-                $this->progressBar(
+                $this->progressBar->progressBar(
                     'Check for required child object files',
                     $this->numCompoundPathsToTest,
                     $current_path_num

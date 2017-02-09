@@ -20,7 +20,8 @@ class Newspapers extends ContentModelQaFramework
         parent::__construct($path_to_input_directory, $path_to_log, $command);
         $this->contentModelAlias = 'newspapers';
 
-        $this->reader = new \islandoraqa\utils\Reader();
+        $this->reader = new \iipqa\utils\Reader();
+        $this->progressBar = new \iipqa\utils\ProgressBar();
     }
 
     /**
@@ -52,7 +53,7 @@ class Newspapers extends ContentModelQaFramework
             $this->matches = true;
             // Skip .. and .
             if (!preg_match('#\.{1,2}$#', $path)) {
-                $this->progressBar(
+                $this->progressBar->progressBar(
                     'Check input directory for disallowed files',
                     $this->numIssuePathsToTest,
                     $current_path_num
@@ -97,7 +98,7 @@ class Newspapers extends ContentModelQaFramework
             $files_in_issue_dir = array();
             // To skip .. and .
             if (!preg_match('#\.{1,2}$#', $issue_path)) {
-                $this->progressBar(
+                $this->progressBar->progressBar(
                     'Check for expected newspaper issue metadata files, page subdirectories, and page files',
                     $this->numIssuePathsToTest,
                     $current_path_num

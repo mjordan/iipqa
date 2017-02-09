@@ -6,6 +6,10 @@ A tool for applying Quality Assurance checks against Islandora import packages i
 
 * PHP 5.5.0 or higher.
 * [Composer](https://getcomposer.org)
+* iipqa uses `wge` to retrieve some schema files from the Library of Congress. If you are on a system that does not have `wget` installed and in your PATH (e.g., most Windows systems), you will need to manually download the following two files into iipaq's `src/utils` directory if you want to use iipqa to validate MODS XML files:
+  * http://www.loc.gov/standards/xlink/xlink.xsd
+  * http://www.loc.gov/mods/xml.xsd
+
 
 To install Islandora QA Framework:
 * Clone the Git repo
@@ -49,7 +53,7 @@ Options:
      Show the help page for this command.
 ```
 
-When you run the iipqa, like this:
+When you run iipqa, like this:
 
 ```
 ./iipqa -m single -l ./test.txt /tmp/test
@@ -78,7 +82,7 @@ If any of iipqa's checks failed, details of the failure will be available in you
 
 ## Post-iipqa scripts
 
-If you include the `-p` option with the path to an executable script, iipqa will run the script after it has completed all of its tests. This script can be written in any language. You can use it to add your own tests, such as validating XML files. The `scripts` directory contains some sample post-iipqa scripts.
+If you include the `-p` option with the path to an executable script, iipqa will run the script after it has completed all of its tests. This script can be written in any language. You can use it to add your own tests, such as checking the resolution of TIFF files or verifying the encoding of OCR files. The `scripts` directory contains some sample post-iipqa scripts.
 
 ## License
 
@@ -88,9 +92,8 @@ GPLv3
 
 * Add PHPUnit tests for compound, book, and newspaper issue classes.
 * Improve MODS validation
-  * Look for MODS.xml or xxx.xml (for single content models)
+  * Look for `MODS.xml` or `xxx.xml` (for single-file content models), not `*.xml`
   * Provide specific error messages
-  * Make progress bar work with MODS validation
 * Add better post-iipqa sample scripts.
 * Add developer documentation, so people can add their own QA checks and content models.
 
