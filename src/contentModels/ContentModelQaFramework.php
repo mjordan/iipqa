@@ -9,6 +9,7 @@ use Monolog\Logger;
  */
 abstract class ContentModelQaFramework
 {
+
     /**
      *
      */

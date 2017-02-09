@@ -17,6 +17,7 @@ To install Islandora QA Framework:
 * That files and directories in the import packages are arranged according to how each of the batch modules expects them to be arranged.
 * That directories named to indicate page order for books and newspapers issues are numeric.
 * That there are no extra files like .Thumbs.db, .DS_Store, or log files mixed in with the import packages.
+* That MODS XML files in import packages validate.
 
 ## Usage
 
@@ -37,6 +38,9 @@ Options:
 
 -s/--strict
      If present, iipqa will exit with a code of 1 instead of 0 if it encounters any errors. Useful while running iipqa within shell scripts.
+
+-v/--validate_mods
+     If present, iipqa will validate all MODS XML files in all input packages.
 
 -p/--post_iipqa <argument>
      Path to script to run post-iipqa.
@@ -83,8 +87,11 @@ GPLv3
 ## To do
 
 * Add PHPUnit tests for compound, book, and newspaper issue classes.
+* Improve MODS validation
+  * Look for MODS.xml or xxx.xml (for single content models)
+  * Provide specific error messages
+  * Make progress bar work with MODS validation
 * Add better post-iipqa sample scripts.
-* Add an option to validate MODS XML files in all packages.
 * Add developer documentation, so people can add their own QA checks and content models.
 
 ## Development/contributing

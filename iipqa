@@ -34,6 +34,12 @@ $qa_cmd->option('s')
     ->describedAs('If present, iipqa will exit with a code of 1 if it encounters any errors.')
     ->boolean();
 
+$qa_cmd->option('v')
+    ->aka('validate_mods')
+    ->describedAs('If present, iipqa will validate all MODS XML files in all input packages.')
+    ->boolean()
+    ->default(false);
+
 $qa_cmd->option('l')
     ->aka('log')
     ->describedAs('Path to the log. Default is ./iipqa.log')
@@ -60,6 +66,12 @@ switch ($content_model) {
         break;
     default:
         exit("Sorry, the content model " . $qa_cmd['content_model'] . " is not recognized ." . PHP_EOL );
+}
+
+if ($qa_cmd['v']) {
+    print "Validating MODS XML files... " . PHP_EOL;
+    $mods_validator = new \islandoraqa\utils\ModsValidator($qa_cmd[0], $qa_cmd['log'], $qa_cmd);
+    $mods_validator->validateMods();
 }
 
 if (in_array(false, $qa_framework->applyQaTests())) {
