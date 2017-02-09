@@ -12,6 +12,12 @@ To install Islandora QA Framework:
 * `cd iipqa`
 * `php composer.phar install` (or equivalent on your system, e.g., `./composer install`)
 
+## What does iipqa check for?
+
+* That files and directories in the import packages are arranged according to how each of the batch modules expects them to be arranged.
+* That directories named to indicate page order for books and newspapers issues are numeric.
+* That there are no extra files like .Thumbs.db, .DS_Store, or log files mixed in with the import packages.
+
 ## Usage
 
 iipqa should be run against you Islandora import packages prior to loading the packages with Islandora Batch, Islandora Book Batch, Islandora Newspaper Batch, or Islandora Compound Batch. Run iipqa as follows:
