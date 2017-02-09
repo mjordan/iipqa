@@ -20,6 +20,7 @@ class ModsValidator
         $this->log->pushHandler($this->logStreamHandler);
 
         $this->progressBar = new \iipqa\utils\ProgressBar();
+        $this->cmodel = $command['content_model'];
     }
 
     /**
@@ -31,8 +32,14 @@ class ModsValidator
         $mods_paths = array();
         $directory_iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($this->inputDirectory));
         foreach ($directory_iterator as $file_path => $info) {
-            if (preg_match('/\.xml/', $file_path)) {
-                $mods_paths[] = $file_path;
+            if ($this->cmodel == 'single') {
+                if (preg_match('/\.xml$/', $file_path)) {
+                    $mods_paths[] = $file_path;
+                }
+            } else {
+                if (preg_match('/MODS\.xml$/', $file_path)) {
+                    $mods_paths[] = $file_path;
+                }
             }
         }
 
