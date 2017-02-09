@@ -50,7 +50,7 @@ class Books extends ContentModelQaFramework
         $current_path_num = 0;
         foreach ($this->bookPathsToTest as $path) {
             $current_path_num++;
-            $this->matches = true;
+            $this->progressBar->matches = true;
             // Skip .. and .
             if (!preg_match('#\.{1,2}$#', $path)) {
                 $this->progressBar->progressBar(
@@ -95,7 +95,7 @@ class Books extends ContentModelQaFramework
         $current_path_num = 0;
         foreach ($this->bookPathsToTest as $book_path) {
             $current_path_num++;
-            $this->matches = true;
+            $this->progressBar->matches = true;
             $files_in_book_dir = array();
             // To skip .. and .
             if (!preg_match('#\.{1,2}$#', $book_path)) {
