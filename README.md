@@ -32,6 +32,9 @@ Options:
 -s/--strict
      If present, iipqa will exit with a code of 1 instead of 0 if it encounters any errors. Useful while running iipqa within shell scripts.
 
+-p/--post_iipqa <argument>
+     Path to script to run post-iipqa.
+
 --help
      Show the help page for this command.
 ```
@@ -63,6 +66,10 @@ Some tests failed. Details are available in test.txt
 
 If any of iipqa's checks failed, details of the failure will be available in your log file.
 
+## Post-iipqa scripts
+
+If you include the `-p` option with the path to an executable script, iipqa will run the script after it has completed all of its tests. This script can be written in any language. You can use it to add your own tests, such as validating XML files. The `scripts` directory contains some sample post-iipqa scripts.
+
 ## License
 
 GPLv3
@@ -70,7 +77,7 @@ GPLv3
 ## To do
 
 * Add PHPUnit tests for compound, book, and newspaper issue classes.
-* Add ability to run optional QA checks, for example validating .xml files against a schema.
+* Add better post-iipqa sample scripts.
 * Add developer documentation, so people can add their own QA checks and content models.
 
 ## Development/contributing

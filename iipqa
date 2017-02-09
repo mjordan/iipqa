@@ -39,6 +39,10 @@ $qa_cmd->option('l')
     ->describedAs('Path to the log. Default is ./iipqa.log')
     ->default('./iipqa.log');
 
+$qa_cmd->option('p')
+    ->aka('post_iipqa')
+    ->describedAs('Path to script to run post-iipqa.');
+
 $content_model = $qa_cmd['content_model'];
 
 switch ($content_model) {
@@ -65,6 +69,17 @@ if (in_array(false, $qa_framework->applyQaTests())) {
     }
 }
 else {
-    // print PHP_EOL . "All tests successful." . PHP_EOL;
     print $color("All tests successful." . PHP_EOL)->green();
 }
+
+if (isset($qa_cmd['p']) && strlen($qa_cmd['p'])) {
+    print "Running post-iipqa script " . $qa_cmd['p'] . PHP_EOL;
+    exec($qa_cmd['p'], $output, $ret);
+    if ($ret) {
+        // exit("Post-iipqa script (" . $qa_cmd['p'] . ") failed." . PHP_EOL);
+        print "Post-iipqa script (" . $qa_cmd['p'] . ") failed." . PHP_EOL;
+        if ($qa_cmd['strict']){
+            exit(1);
+        }
+    }
+} 
