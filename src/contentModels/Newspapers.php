@@ -69,6 +69,7 @@ class Newspapers extends ContentModelQaFramework
         if (count($files_present)) {
             return false;
         } else {
+            $this->log->addInfo("'Check input directory for disallowed files' test did not find any problems.");
             return true;
         }
     }
@@ -138,6 +139,8 @@ class Newspapers extends ContentModelQaFramework
         if (count($failures)) {
             return false;
         } else {
+            $this->log->addInfo("'Check for expected newspaper issue metadata files, page subdirectories, " .
+                "and page files' test did not find any problems.");
             return true;
         }
     }

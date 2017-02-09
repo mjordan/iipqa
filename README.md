@@ -9,7 +9,7 @@ A tool for applying Quality Assurance checks against Islandora import packages i
 * `wget` (but see note below for what to do if you don't have `wget` installed).
 
 
-To install Islandora QA Framework:
+To install the Islandora Import Package QA Tool:
 * Clone the Git repo
 * `cd iipqa`
 * `php composer.phar install` (or equivalent on your system, e.g., `./composer install`)

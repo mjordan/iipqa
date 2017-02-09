@@ -73,6 +73,7 @@ class Compound extends ContentModelQaFramework
         if (count($files_present)) {
             return false;
         } else {
+            $this->log->addInfo("'Check for nondirectories' test did not find any problems.");
             return true;
         }
     }
@@ -134,6 +135,7 @@ class Compound extends ContentModelQaFramework
         if (count($bad_compound_paths)) {
             return false;
         } else {
+            $this->log->addInfo("'Check for required compound object files' test did not find any problems.");
             return true;
         }
     }
@@ -200,6 +202,7 @@ class Compound extends ContentModelQaFramework
         if (count($bad_compound_paths)) {
             return false;
         } else {
+            $this->log->addInfo("'Check for directories named in structure.xml' test did not find any problems.");
             return true;
         }
     }
@@ -267,6 +270,7 @@ class Compound extends ContentModelQaFramework
         if (count($bad_child_paths)) {
             return false;
         } else {
+            $this->log->addInfo("'Check for required child object files' test did not find any problems.");
             return true;
         }
     }

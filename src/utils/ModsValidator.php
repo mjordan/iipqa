@@ -36,13 +36,20 @@ class ModsValidator
             }
         }
 
+        $invalids_present = array();
         $current_path_num = 0;
         $num_paths = count($mods_paths);
         foreach ($mods_paths as $mods_path) {
             $current_path_num++;
             $this->progressBar->matches = true;
             $this->progressBar->progressBar('Validating MODS XML files', $num_paths, $current_path_num);
-            $this->validateSingleMods($mods_path);
+            if (!$this->validateSingleMods($mods_path)) {
+                $invalids_present[] = false;
+            }
+        }
+
+        if (!in_array(false, $invalids_present)) {
+            $this->log->addInfo("'Validating MODS XML files' test did not find any problems.");
         }
     }
 

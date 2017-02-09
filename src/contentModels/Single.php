@@ -82,6 +82,7 @@ class Single extends ContentModelQaFramework
             $this->log->addWarning("Unique extensions " . var_export($unique_extensions, true));
             return false;
         } else {
+            $this->log->addInfo("'Unique file extensions' test did not find any problems.");
             return true;
         }
     }
@@ -131,6 +132,7 @@ class Single extends ContentModelQaFramework
             }
             return false;
         } else {
+            $this->log->addInfo("'XML/OBJ pairs' test did not find any problems.");
             return true;
         }
     }
@@ -162,6 +164,7 @@ class Single extends ContentModelQaFramework
         if (count($directories_present)) {
             return false;
         } else {
+            $this->log->addInfo("'Directories present' test did not find any problems.");
             return true;
         }
     }
