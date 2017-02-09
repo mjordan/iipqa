@@ -96,7 +96,6 @@ GPLv3
 
 * Add PHPUnit tests for compound, book, and newspaper issue classes.
 * Improve MODS validation
-  * Look for `MODS.xml` or `xxx.xml` (for single-file content models), not `*.xml`
   * Provide specific error messages
 * Add better post-iipqa sample scripts.
 * Add developer documentation, so people can add their own QA checks and content models.
