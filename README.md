@@ -6,7 +6,8 @@ A tool for applying Quality Assurance checks against Islandora import packages i
 
 * PHP 5.5.0 or higher.
 * [Composer](https://getcomposer.org)
-* iipqa uses `wget` to retrieve some schema files from the Library of Congress on installation. If you are on a system that does not have `wget` installed and in your PATH (e.g., most Windows systems), you will see an error starting with `'wget' is not recognized as an internal or external command, operable program or batch file.` All you need to do is manually download the following two files into iipaq's `src/utils` directory if you want to use iipqa to validate MODS XML files:
+
+iipqa uses `wget` to retrieve some schema files from the Library of Congress on installation. If you are on a system that does not have `wget` installed and in your PATH (e.g., most Windows systems), you will see an error starting with `'wget' is not recognized as an internal or external command, operable program or batch file.` All you need to do is manually download the following two files into iipaq's `src/utils` directory if you want to use iipqa to validate MODS XML files:
   * http://www.loc.gov/standards/xlink/xlink.xsd
   * http://www.loc.gov/mods/xml.xsd
 
@@ -22,6 +23,8 @@ To install Islandora QA Framework:
 * That directories named to indicate page order for books and newspapers issues are numeric.
 * That there are no extra files like .Thumbs.db, .DS_Store, or log files mixed in with the import packages.
 * That MODS XML files in import packages validate.
+
+The MODS validation test is optional, and is enabled by providing the `-v` option in the `iipqa` command. The other tests are always run.
 
 ## Usage
 
