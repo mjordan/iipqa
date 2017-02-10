@@ -18,6 +18,8 @@ class ModsValidator
         $this->log = new \Monolog\Logger('iipqa');
         $this->logStreamHandler= new \Monolog\Handler\StreamHandler($this->pathToLog, Logger::INFO);
         $this->log->pushHandler($this->logStreamHandler);
+        
+        print "Locating all MODS XML files (please be patient)..." . PHP_EOL;
 
         $this->progressBar = new \iipqa\utils\ProgressBar();
         $this->cmodel = $command['content_model'];
@@ -38,14 +40,12 @@ class ModsValidator
                 if (preg_match('/\.xml$/', $file_path)) {
                     $current_path_num++;
                     $this->progressBar->matches = true;
-                    $this->progressBar->progressBar('Finding MODS XML files', $num_paths, $current_path_num);
                     $mods_paths[] = $file_path;
                 }
             } else {
                 if (preg_match('/MODS\.xml$/', $file_path)) {
                     $current_path_num++;
                     $this->progressBar->matches = true;
-                    $this->progressBar->progressBar('Finding MODS XML files', $num_paths, $current_path_num);
                     $mods_paths[] = $file_path;
                 }
             }
@@ -57,7 +57,7 @@ class ModsValidator
         foreach ($mods_paths as $mods_path) {
             $current_path_num++;
             $this->progressBar->matches = true;
-            $this->progressBar->progressBar('Validating MODS XML files', $num_paths, $current_path_num);
+            $this->progressBar->progressBar('Validate MODS XML files', $num_paths, $current_path_num);
             if (!$this->validateSingleMods($mods_path)) {
                 $invalids_present[] = false;
             }
@@ -66,7 +66,7 @@ class ModsValidator
         if (in_array(false, $invalids_present)) {
             return false;
         } else {
-            $this->log->addInfo("'Validating MODS XML files' test did not find any problems.");
+            $this->log->addInfo("'Validate MODS XML files' test did not find any problems.");
             return true;
         }
     }

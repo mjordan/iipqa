@@ -68,7 +68,10 @@ switch ($content_model) {
         exit("Sorry, the content model " . $qa_cmd['content_model'] . " is not recognized ." . PHP_EOL );
 }
 
-// See https://github.com/mjordan/iipqa/issues/1.
+// We want the content-model-specific tests to run first.
+$qa_failures_present = $qa_framework->applyQaTests();
+
+// Then the general tests.
 if ($qa_cmd['v']) {
     $mods_validator = new \iipqa\utils\ModsValidator($qa_cmd[0], $qa_cmd['log'], $qa_cmd);
     if (!$mods_validator->validateMods()) {
@@ -80,7 +83,7 @@ if ($qa_cmd['v']) {
     }
 }
 
-if (in_array(false, $qa_framework->applyQaTests())) {
+if (in_array(false, $qa_failures_present)) {
     print $color("Some tests failed. Details are available in ")->yellow() . $qa_cmd['log'] . PHP_EOL;
     if ($qa_cmd['strict']) {
         exit(1);
