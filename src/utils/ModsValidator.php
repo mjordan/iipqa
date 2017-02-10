@@ -55,8 +55,11 @@ class ModsValidator
             }
         }
 
-        if (!in_array(false, $invalids_present)) {
+        if (in_array(false, $invalids_present)) {
+            return false;
+        } else {
             $this->log->addInfo("'Validating MODS XML files' test did not find any problems.");
+            return true;
         }
     }
 

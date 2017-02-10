@@ -20,16 +20,16 @@ To install the Islandora Import Package QA Tool:
 
 ## What does iipqa check for?
 
-* That files and directories in the import packages are arranged according to how each of the batch modules expects them to be arranged.
+* That files and directories in import packages are arranged according to how each of the batch modules expects them to be arranged.
 * That directories named to indicate page order for books and newspapers issues are numeric.
-* That there are no extra files like .Thumbs.db, .DS_Store, or log files mixed in with the import packages.
+* That there are no extra files like .Thumbs.db, .DS_Store, or .log files mixed in with the import packages.
 * That MODS XML files in import packages validate.
 
 The MODS validation test is optional, and is enabled by providing the `-v` option in the `iipqa` command. The other tests are always run.
 
 ## Usage
 
-iipqa should be run against you Islandora import packages prior to loading the packages with Islandora Batch, Islandora Book Batch, Islandora Newspaper Batch, or Islandora Compound Batch. Run iipqa as follows:
+iipqa should be run against your Islandora import packages prior to loading the packages with Islandora Batch, Islandora Book Batch, Islandora Newspaper Batch, or Islandora Compound Batch. Run iipqa as follows:
 
 `php iipqa [options] directory`
 
@@ -51,7 +51,7 @@ Options:
      If present, iipqa will validate all MODS XML files in all input packages.
 
 -p/--post_iipqa <argument>
-     Path to script to run post-iipqa.
+     Path to script to run after iipqa performs its tests.
 
 --help
      Show the help page for this command.
@@ -86,7 +86,7 @@ If any of iipqa's checks failed, details of the failure will be available in you
 
 ## Post-iipqa scripts
 
-If you include the `-p` option with the path to an executable script, iipqa will run the script after it has completed all of its tests. This script can be written in any language. You can use it to add your own tests, such as checking the resolution of TIFF files or verifying the encoding of OCR files. The `scripts` directory contains some sample post-iipqa scripts.
+If you include the `-p` option with the path to an executable script, iipqa will run the script after it has completed all of its tests. This script can be written in any language. You can use it to add your own tests, such as checking the resolution of TIFF files or verifying the encoding of OCR files, or do things like email yourself the iipqa log file. The `scripts` directory contains some sample post-iipqa scripts.
 
 ## License
 
@@ -94,9 +94,9 @@ GPLv3
 
 ## To do
 
+* Come up with an better short name for this tool than 'iipqa'!
 * Add PHPUnit tests for compound, book, and newspaper issue classes.
-* Improve MODS validation
-  * Provide specific error messages
+* Have the MODS validator provide specific error messages instead of just pass/fail
 * Add better post-iipqa sample scripts.
 * Add developer documentation, so people can add their own QA checks and content models.
 
