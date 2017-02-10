@@ -31,13 +31,21 @@ class ModsValidator
     {
         $mods_paths = array();
         $directory_iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($this->inputDirectory));
+        $num_paths = iterator_count($directory_iterator);
+        $current_path_num = 0;
         foreach ($directory_iterator as $file_path => $info) {
             if ($this->cmodel == 'single') {
                 if (preg_match('/\.xml$/', $file_path)) {
+                    $current_path_num++;
+                    $this->progressBar->matches = true;
+                    $this->progressBar->progressBar('Finding MODS XML files', $num_paths, $current_path_num);
                     $mods_paths[] = $file_path;
                 }
             } else {
                 if (preg_match('/MODS\.xml$/', $file_path)) {
+                    $current_path_num++;
+                    $this->progressBar->matches = true;
+                    $this->progressBar->progressBar('Finding MODS XML files', $num_paths, $current_path_num);
                     $mods_paths[] = $file_path;
                 }
             }
