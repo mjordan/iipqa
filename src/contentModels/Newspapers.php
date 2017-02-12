@@ -50,7 +50,7 @@ class Newspapers extends ContentModelQaFramework
         $current_path_num = 0;
         foreach ($this->issuePathsToTest as $path) {
             $current_path_num++;
-            $this->matches = true;
+            $this->progressBar->matches = true;
             // Skip .. and .
             if (!preg_match('#\.{1,2}$#', $path)) {
                 $this->progressBar->progressBar(
@@ -95,7 +95,7 @@ class Newspapers extends ContentModelQaFramework
         $current_path_num = 0;
         foreach ($this->issuePathsToTest as $issue_path) {
             $current_path_num++;
-            $this->matches = true;
+            $this->progressBar->matches = true;
             $files_in_issue_dir = array();
             // To skip .. and .
             if (!preg_match('#\.{1,2}$#', $issue_path)) {

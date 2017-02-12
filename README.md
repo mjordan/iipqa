@@ -33,7 +33,7 @@ iipqa should be run against your Islandora import packages prior to loading the 
 
 `php iipqa [options] directory`
 
-'directory' (required) is the path to the directory containing Islandora import packages you want to test. The trailing slash is optional.
+'directory' (required) is the path to the directory containing Islandora import packages you want to test. The trailing slash is optional. If you wish, you may specify the path to a Zip file instead  of a directory. The Zip file must be structured as required by Islandora Batch, Book Batch, or Newspaper Batch.
 
 Options:
 
