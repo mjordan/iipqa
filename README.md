@@ -100,9 +100,9 @@ A single script with arguments:
 
 Multiple scripts, some with arguments:
 
-`-p ["somescript.php", "someotherscript.php foo bar", "cleanup.py"]`
+`-p [somescript.php, "someotherscript.php foo bar", cleanup.py]`
 
-scripts with arguments must be wrapped in double quotes (`"`), and multiple script paths (and their arguments) must be wrapped in square brackets (`[]`).
+Scripts with arguments must be wrapped in double quotes (`"`), and multiple script paths (and their arguments) must be separated by commas (`,`) wrapped in square brackets (`[]`) as illustrated in these examples.
 
 ## License
 
