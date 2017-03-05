@@ -10,11 +10,10 @@ $qa_cmd->option()
     ->require(true)
     ->describedAs('Ablsolute or relative path to a directory containing Islandora import packages. ' .
         'Trailing slash is optional.')
-    ->must(function($dir_path) {
+    ->must(function ($dir_path) {
         if (file_exists($dir_path)) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     });
@@ -24,7 +23,7 @@ $qa_cmd->option('m')
     ->require(true)
     ->describedAs('An alias for groups of Islandora content models. Allowed values are ' .
         'single, newspapers, books, compound.')
-    ->must(function($cmodel) {
+    ->must(function ($cmodel) {
         $cmodels = array('single', 'newspapers', 'books', 'compound');
         return in_array($cmodel, $cmodels);
     });
@@ -47,7 +46,7 @@ $qa_cmd->option('l')
 
 $qa_cmd->option('p')
     ->aka('post_iipqa')
-    ->describedAs('Path to script to run after iipqa performs its tests.');
+    ->describedAs('Path to script(s) to run after iipqa performs its tests.');
 
 $content_model = $qa_cmd['content_model'];
 $input_path = $qa_cmd[0];
@@ -103,12 +102,30 @@ else {
 }
 
 if (isset($qa_cmd['p']) && strlen($qa_cmd['p'])) {
-    print "Running post-iipqa script " . $qa_cmd['p'] . PHP_EOL;
-    exec($qa_cmd['p'], $output, $ret);
-    if ($ret) {
-        print "Post-iipqa script (" . $qa_cmd['p'] . ") failed." . PHP_EOL;
-        if ($qa_cmd['strict']){
-            exit(1);
+    if (preg_match("/^\[.+\]$/", $qa_cmd['p'])) {
+        $scripts = trim($qa_cmd['p'], "[]");
+        $scripts = explode(',', $scripts);
+        foreach ($scripts as &$script) {
+            $script = trim($script);
+            $script = trim($script, '"');
+            print "Running post-iipqa script " . $script . PHP_EOL;
+            exec($script, $output, $ret);
+            if ($ret) {
+                print "Post-iipqa script (" . $script . ") failed." . PHP_EOL;
+                if ($qa_cmd['strict']){
+                    exit(1);
+                }
+            }
         }
     }
-} 
+    else {
+        print "Running post-iipqa script " . $qa_cmd['p'] . PHP_EOL;
+        exec($qa_cmd['p'], $output, $ret);
+        if ($ret) {
+            print "Post-iipqa script (" . $qa_cmd['p'] . ") failed." . PHP_EOL;
+            if ($qa_cmd['strict']){
+                exit(1);
+            }
+        }
+    }
+}

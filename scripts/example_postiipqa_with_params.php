@@ -11,10 +11,15 @@ require 'vendor/autoload.php';
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
-$path_to_my_log = '/tmp/mylog,txt';
+$foo = trim($argv[1]);
+$bar = trim($argv[2]);
+
+var_dump($argv);
+
+$path_to_my_log = '/tmp/iipqa_with_params.log';
 
 $log = new Logger('name');
 $log->pushHandler(new StreamHandler($path_to_my_log, Logger::WARNING));
 
-$log->warning('Foo');
-$log->error('Bar');
+$log->warning($foo);
+$log->error($bar);

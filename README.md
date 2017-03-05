@@ -86,7 +86,23 @@ If any of iipqa's checks failed, details of the failure will be available in you
 
 ## Post-iipqa scripts
 
-If you include the `-p` option with the path to an executable script, iipqa will run the script after it has completed all of its tests. This script can be written in any language. You can use it to add your own tests, such as checking the resolution of TIFF files or verifying the encoding of OCR files, or do things like email yourself the iipqa log file. The `scripts` directory contains some sample post-iipqa scripts.
+If you include the `-p` option with the path to one or more executable scripts, iipqa will run the script after it has completed all of its tests. This script can be written in any language. You can use it to add your own tests, such as checking the resolution of TIFF files or verifying the encoding of OCR files, or do things like email yourself the iipqa log file. The `scripts` directory contains some sample post-iipqa scripts.
+
+Here are some example uses:
+
+A single script:
+
+`-p somescript.sh`
+
+A single script with arguments:
+
+`-p "somescript.sh foo bar"`
+
+Multiple scripts, some with arguments:
+
+`-p ["somescript.php", "someotherscript.php foo bar", "cleanup.py"]`
+
+scripts with arguments must be wrapped in double quotes (`"`), and multiple script paths (and their arguments) must be wrapped in square brackets (`[]`).
 
 ## License
 
