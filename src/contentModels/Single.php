@@ -52,7 +52,7 @@ class Single extends ContentModelQaFramework
     public function checkExtensions()
     {
         $all_files = glob($this->inputDirectory . DIRECTORY_SEPARATOR . '*');
-        $only_dirs = array();
+        $only_files = array();
         foreach ($all_files as $file) {
             if (is_file($file)) {
                 $only_files[] = $file;

@@ -23,7 +23,7 @@ $qa_cmd->option('m')
     ->aka('content_model')
     ->require(true)
     ->describedAs('An alias for groups of Islandora content models. Allowed values are ' .
-        'single, newspapers, books, compound. Default is "single".')
+        'single, newspapers, books, compound.')
     ->must(function($cmodel) {
         $cmodels = array('single', 'newspapers', 'books', 'compound');
         return in_array($cmodel, $cmodels);
