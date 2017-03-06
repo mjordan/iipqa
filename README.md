@@ -86,29 +86,31 @@ If any of iipqa's checks failed, details of the failure will be available in you
 
 ## Post-iipqa scripts
 
-If you include the `-p` option with the path to one or more executable scripts, iipqa will run the script after it has completed all of its tests. This script can be written in any language. You can use it to add your own tests, such as checking the resolution of TIFF files or verifying the encoding of OCR files, or do things like email yourself the iipqa log file. The `scripts` directory contains some sample post-iipqa scripts.
+If you include the `-p` option with the path to one or more executable scripts, iipqa will run the script(s) after it has completed all of its core tests. This script can be written in any language. You can use it to add your own tests, such as checking the resolution of TIFF files or verifying the encoding of OCR files, or do things like email yourself the iipqa log file.
 
-Here are some example uses:
+Here are some examples of how to run post-iipqa scripts:
 
-A single script:
+To run a single script:
 
 `-p somescript.sh`
 
-A single script with arguments:
+To run a single script with arguments:
 
 `-p "somescript.sh foo bar"`
 
-Multiple scripts, some with arguments:
+To run multiple scripts, some with arguments:
 
 `-p [somescript.php, "someotherscript.php foo bar", cleanup.py]`
 
 Scripts with arguments must be wrapped in double quotes (`"`), and multiple script paths (and their arguments) must be separated by commas (`,`) wrapped in square brackets (`[]`) as illustrated in these examples.
 
-The `scripts` directory contains three samples. One of them, `check_title_length.php`, performs a useful test: it checks for titles in MODS XML files that exceed Fedora Repository's limit of 255 characters for object labels, and also checks for empty mods:title elements. The other two scripts are developer examples. Running the `check_title_length.php` script would look like this:
+The `scripts` directory contains three examples. One of them, `check_title_length.php`, performs a real-world test: it checks for titles in MODS XML files that exceed Fedora Repository's limit of 255 characters for object labels, and also checks for empty mods:title elements. Running the `check_title_length.php` script would look like this:
 
 ```
 php iipqa -m single -l test.log -p "scripts/get_title_length.php /tmp/input" /tmp/input
 ```
+
+The other two scripts are developer examples.
 
 ## License
 
@@ -123,7 +125,7 @@ GPLv3
 
 ## Development/contributing
 
-There are two ways to extend this tool so that it performs additional tests on Islandora ingest packages: 1) write a custom post-iipqa script, or 2) modify the core content-model classes.
+There are two ways to extend this tool so that it performs additional QA tests on Islandora ingest packages: 1) write a custom post-iipqa script, or 2) modify the core content-model classes.
 
 If you want to contribute to the development of iipqa, please consider the following:
 
