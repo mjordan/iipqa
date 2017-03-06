@@ -104,6 +104,12 @@ Multiple scripts, some with arguments:
 
 Scripts with arguments must be wrapped in double quotes (`"`), and multiple script paths (and their arguments) must be separated by commas (`,`) wrapped in square brackets (`[]`) as illustrated in these examples.
 
+The `scripts` directory contains three samples. One of them, `check_title_length.php`, performs a useful test: it checks for titles in MODS XML files that exceed Fedora Repository's limit of 255 characters for object labels, and also checks for empty mods:title elements. The other two scripts are developer examples. Running the `check_title_length.php` script would look like this:
+
+```
+php iipqa -m single -l test.log -p "scripts/get_title_length.php /tmp/input" /tmp/input
+```
+
 ## License
 
 GPLv3
@@ -113,10 +119,13 @@ GPLv3
 * Come up with an better short name for this tool than 'iipqa'!
 * Add PHPUnit tests for compound, book, and newspaper issue classes.
 * Have the MODS validator provide specific error messages instead of just pass/fail
-* Add better post-iipqa sample scripts.
 * Add developer documentation, so people can add their own QA checks and content models.
 
 ## Development/contributing
+
+There are two ways to extend this tool so that it performs additional tests on Islandora ingest packages: 1) write a custom post-iipqa script, or 2) modify the core content-model classes.
+
+If you want to contribute to the development of iipqa, please consider the following:
 
 * If you discover a bug, or have a use case not documented here, open an issue.
 * If you want to open a pull request, please open an issue first.
