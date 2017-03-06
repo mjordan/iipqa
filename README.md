@@ -107,7 +107,7 @@ Scripts with arguments must be wrapped in double quotes (`"`), and multiple scri
 The `scripts` directory contains three examples. One of them, `check_title_length.php`, performs a real-world test: it checks for titles in MODS XML files that exceed Fedora Repository's limit of 255 characters for object labels, and also checks for empty mods:title elements. Running the `check_title_length.php` script would look like this:
 
 ```
-php iipqa -m single -l test.log -p "scripts/get_title_length.php /tmp/input" /tmp/input
+./iipqa -m single -l test.log -p "scripts/check_title_length.php /tmp/input" /tmp/input
 ```
 
 The other two scripts are developer examples.
@@ -125,7 +125,10 @@ GPLv3
 
 ## Development/contributing
 
-There are two ways to extend this tool so that it performs additional QA tests on Islandora ingest packages: 1) write a custom post-iipqa script, or 2) modify the core content-model classes.
+There are two ways to extend this tool so that it performs additional QA tests on Islandora ingest packages:
+
+1. write custom post-iipqa scripts, or
+1. modify the core content-model classes.
 
 If you want to contribute to the development of iipqa, please consider the following:
 
@@ -133,4 +136,6 @@ If you want to contribute to the development of iipqa, please consider the follo
 * If you want to open a pull request, please open an issue first.
 * Coding guidelines
   * Check code style with `./vendor/bin/phpcs --standard=PSR2 src`
+    * If you want to apply tests to `iipqa`, run ./vendor/bin/phpcs --standard=PSR2 iipqa`
+    * If you want to apply tests to files in `scripts`, run ./vendor/bin/phpcs --standard=PSR2 scripts`
   * Write PHPUnit tests, then run them within the iipqa directory by running `phpunit tests`
