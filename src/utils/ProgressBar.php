@@ -54,7 +54,7 @@ class ProgressBar
             if ($this->matches) {
                 print " Done." . PHP_EOL;
             } else {
-                print . PHP_EOL;
+                print PHP_EOL;
             }
         }
     }
