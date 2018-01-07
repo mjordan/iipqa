@@ -25,7 +25,7 @@ To install the Islandora Import Package QA Tool:
 * That there are no extra files like .Thumbs.db, .DS_Store, or .log files mixed in with the import packages.
 * That MODS XML files in import packages validate.
 
-The MODS validation test is optional, and is enabled by providing the `-v` option in the `iipqa` command. The other tests are always run.
+The MODS validation test is optional, and is enabled by providing the `-v` option in the `iipqa` command. The other tests are always runi (although you can disable the check in compound object input for the `structure.xml` file by including the `--skip_structure`/`-k` option).
 
 ## Usage
 
@@ -39,7 +39,7 @@ Options:
 
 ```
 -m/--content_model <argument>
-     Required. An aliases for groups of Islandora content models. Allowed values are single, newspapers, books, compound.
+     Required. An aliases for groups of Islandora content models. Allowed values are single, single_rest_ingester, newspapers, books, compound.
 
 -l/--log <argument>
      Path to the log. Default is ./iipqa.log
@@ -49,6 +49,9 @@ Options:
 
 -v/--validate_mods
      If present, iipqa will validate all MODS XML files in all input packages.
+
+-k/--skip_structure
+     If present, iipqa will skip validating the presence of structure.xml files in compound packages.
 
 -p/--post_iipqa <argument>
      Path to script to run after iipqa performs its tests.

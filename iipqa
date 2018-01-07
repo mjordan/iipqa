@@ -22,9 +22,9 @@ $qa_cmd->option('m')
     ->aka('content_model')
     ->require(true)
     ->describedAs('An alias for groups of Islandora content models. Allowed values are ' .
-        'single, newspapers, books, compound.')
+        'single, single_rest_ingester, newspapers, books, compound.')
     ->must(function ($cmodel) {
-        $cmodels = array('single', 'newspapers', 'books', 'compound');
+        $cmodels = array('single', 'single_rest_ingester', 'newspapers', 'books', 'compound');
         return in_array($cmodel, $cmodels);
     });
 
@@ -36,6 +36,12 @@ $qa_cmd->option('s')
 $qa_cmd->option('v')
     ->aka('validate_mods')
     ->describedAs('If present, iipqa will validate all MODS XML files in all input packages.')
+    ->boolean()
+    ->default(false);
+
+$qa_cmd->option('k')
+    ->aka('skip_structure')
+    ->describedAs('If present, iipqa will skip validating the presence of structure.xml files in compound packages.')
     ->boolean()
     ->default(false);
 
@@ -63,6 +69,9 @@ switch ($content_model) {
     case 'single':
         $qa_framework = new \iipqa\contentmodels\Single($input_path, $qa_cmd['log'], $qa_cmd);
         break;
+    case 'single_rest_ingester':
+        $qa_framework = new \iipqa\contentmodels\SingleRestIngester($input_path, $qa_cmd['log'], $qa_cmd);
+        break;
     case 'newspapers':
         $qa_framework = new \iipqa\contentmodels\Newspapers($input_path, $qa_cmd['log'], $qa_cmd);
         break;
@@ -73,7 +82,7 @@ switch ($content_model) {
         $qa_framework = new \iipqa\contentmodels\Compound($input_path, $qa_cmd['log'], $qa_cmd);
         break;
     default:
-        exit("Sorry, the content model " . $qa_cmd['content_model'] . " is not recognized ." . PHP_EOL );
+        exit("Sorry, the content model " . $qa_cmd['content_model'] . " is not recognized ." . PHP_EOL);
 }
 
 // We want the content-model-specific tests to run first.
@@ -96,8 +105,7 @@ if (in_array(false, $qa_failures_present)) {
     if ($qa_cmd['strict']) {
         exit(1);
     }
-}
-else {
+} else {
     print $color("All tests successful." . PHP_EOL)->green();
 }
 
@@ -112,18 +120,17 @@ if (isset($qa_cmd['p']) && strlen($qa_cmd['p'])) {
             exec($script, $output, $ret);
             if ($ret) {
                 print "Post-iipqa script (" . $script . ") failed." . PHP_EOL;
-                if ($qa_cmd['strict']){
+                if ($qa_cmd['strict']) {
                     exit(1);
                 }
             }
         }
-    }
-    else {
+    } else {
         print "Running post-iipqa script " . $qa_cmd['p'] . PHP_EOL;
         exec($qa_cmd['p'], $output, $ret);
         if ($ret) {
             print "Post-iipqa script (" . $qa_cmd['p'] . ") failed." . PHP_EOL;
-            if ($qa_cmd['strict']){
+            if ($qa_cmd['strict']) {
                 exit(1);
             }
         }

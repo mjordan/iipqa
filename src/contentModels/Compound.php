@@ -19,6 +19,7 @@ class Compound extends ContentModelQaFramework
     {
         parent::__construct($path_to_input_directory, $path_to_log, $command);
         $this->contentModelAlias = 'single';
+        $this->command = $command;
 
         $this->reader = new \iipqa\utils\Reader();
         $this->progressBar = new \iipqa\utils\ProgressBar();
@@ -32,7 +33,10 @@ class Compound extends ContentModelQaFramework
     {
         $this->testResults[] = $this->checkForNonDirectories();
         $this->testResults[] = $this->checkRequiredCompoundFiles();
-        $this->testResults[] = $this->checkStructure();
+        if (!$this->command['k']) {
+            var_dump($this->command['k']);
+            $this->testResults[] = $this->checkStructure();
+        }
         $this->testResults[] = $this->checkRequiredChildFiles();
         return $this->testResults;
     }
@@ -119,9 +123,11 @@ class Compound extends ContentModelQaFramework
                 }
 
                 $structure_path = $path . DIRECTORY_SEPARATOR . 'structure.xml';
-                if (!file_exists($structure_path)) {
-                    $this->log->addWarning("Check required compound object files - structure.xml missing in " . $path);
-                    $bad_compound_paths[] = $path;
+                if (!$this->command['k']) {
+                    if (!file_exists($structure_path)) {
+                        $this->log->addWarning("Check required compound object files - structure.xml missing in " . $path);
+                        $bad_compound_paths[] = $path;
+                    }
                 }
                 $mods_path = $path . DIRECTORY_SEPARATOR . 'MODS.xml';
                 if (!file_exists($mods_path)) {
