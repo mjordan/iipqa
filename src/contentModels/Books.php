@@ -112,7 +112,7 @@ class Books extends ContentModelQaFramework
                         if (is_dir($page_dir)) {
                             $page_dir_segment = basename($page_dir);
                             if (!is_numeric($page_dir_segment)) {
-                                $this->log->addWarning("Page direcotry $page_dir is not numeric.");
+                                $this->log->addWarning("Page directory $page_dir is not numeric.");
                                 $failures[] = $page_dir;
                             }
                             // Check page directories for allowed files.
